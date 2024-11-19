@@ -35,6 +35,12 @@ spring:
             - Path=/general/api/v1/usuarios/ubicacion/**
           filters:
             - RewritePath=/general/api/v1/usuarios/ubicacion/(?<segment>.*), /api/v1/usuarios/ubicacion/$\{segment}
+        - id: tipoUbicacion-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/general/api/v1/tipoUbicacion/**
+          filters:
+            - RewritePath=/general/api/v1/tipoUbicacion/(?<segment>.*), /api/v1/tipoUbicacion/$\{segment}
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:

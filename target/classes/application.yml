@@ -20,6 +20,24 @@ spring:
         - id: tipoIdentificacion-route
           uri: http://localhost:8081
           predicates:
+            - Path=/general/api/v1/tipoIdentificacion/**
+          filters:
+            - RewritePath=/general/api/v1/tipoIdentificacion/(?<segment>.*), /api/v1/tipoIdentificacion/$\{segment}
+        - id: usuarios-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/general/api/v1/usuarios/**
+          filters:
+            - RewritePath=/general/api/v1/usuarios/(?<segment>.*), /api/v1/usuarios/$\{segment}
+        - id: usuarios-ubicacion-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/general/api/v1/usuarios/ubicacion/**
+          filters:
+            - RewritePath=/general/api/v1/usuarios/ubicacion/(?<segment>.*), /api/v1/usuarios/ubicacion/$\{segment}
+        - id: tipoUbicacion-route
+          uri: http://localhost:8081
+          predicates:
             - Path=/general/api/v1/tipoUbicacion/**
           filters:
             - RewritePath=/general/api/v1/tipoUbicacion/(?<segment>.*), /api/v1/tipoUbicacion/$\{segment}
