@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  ssl:
+    enabled: true
+    key-password: changeit
+    key-store: classpath:localhost.p12
+    key-store-password: changeit
+    key-store-type: PKCS12
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: sede-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/general/api/v1/sede/**
+          filters:
+            - RewritePath=/general/api/v1/sede/(?<segment>.*), /api/v1/sede/$\{segment}
+        - id: tipoIdentificacion-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/general/api/v1/tipoUbicacion/**
+          filters:
+            - RewritePath=/general/api/v1/tipoUbicacion/(?<segment>.*), /api/v1/tipoUbicacion/$\{segment}
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "https://localhost:5173"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+
+spring.security.oauth2.resourceserver.jwt:
+  issuer-uri: https://dev-g3qtue2ymqd1uqxf.us.auth0.com/
+  audiences: https://dev-g3qtue2ymqd1uqxf.us.auth0.com/api/v2/
